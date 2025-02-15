@@ -1,56 +1,92 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NierLoadingScreen from "../components/Loading";
-import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import { supabase } from "../api/supabaseClient";
+import NavButton from "../components/Home/NavButton";
+
 const Home = () => {
-  const nav = useNavigate();
-  const { user } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const { setUser, user } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(() => {
+    return localStorage.getItem("hasSeenLoading") !== "true";
+  });
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser({
+        id: session?.user?.id || "",
+        email: session?.user?.email || null,
+        nickname: session?.user?.user_metadata.nickname || null,
+        created_at: session?.user?.created_at || "",
+        img_url: session?.user?.user_metadata.img_url || null,
+      });
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser({
+        id: session?.user?.id || "",
+        email: session?.user?.email || null,
+        nickname: session?.user?.user_metadata.nickname || null,
+        created_at: session?.user?.created_at || "",
+        img_url: session?.user?.user_metadata.img_url || null,
+      });
+    });
+
+    return () => subscription.unsubscribe();
+  }, [setUser]);
 
   if (isLoading) {
-    return <NierLoadingScreen setIsLoading={setIsLoading} />;
+    return (
+      <NierLoadingScreen
+        setIsLoading={(value) => {
+          setIsLoading(value);
+          if (!value) {
+            localStorage.setItem("hasSeenLoading", "true");
+          }
+        }}
+      />
+    );
   }
-  console.log(user);
+
   return (
     <div className="space-y-8">
       {/* 메인 타이틀 섹션 */}
       <section className="text-center space-y-4">
         <h1 className="text-5xl mb-6 pt-7">YoRHa DB - [9]</h1>
-        <p className="text-lg tracking-wider">-- Welcome to YoRHa Network --</p>
+        <p className="text-lg tracking-wider">
+          {user?.nickname
+            ? `-- Welcome back, ${user.nickname} --`
+            : "-- Welcome to YoRHa Network --"}
+        </p>
         <div className="h-[1px] w-32 bg-[#454138] mx-auto"></div>
       </section>
 
       {/* 메인 네비게이션 */}
-      <nav className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mt-12">
-        <button
-          className="button p-8 text-left hover:bg-[#454138] hover:text-[#dcd8c0] transition-all"
-          onClick={() => nav("/login")}
-        >
-          <p className="text-sm tracking-widest mb-2">01</p>
-          <p className="text-xl mb-4">AUTHORIZATION</p>
-          <p className="text-sm opacity-70">Access YoRHa database</p>
-        </button>
-
-        <button
-          className="button p-8 text-left hover:bg-[#454138] hover:text-[#dcd8c0] transition-all"
-          onClick={() => nav("/register")}
-        >
-          <p className="text-sm tracking-widest mb-2">02</p>
-          <p className="text-xl mb-4">NEW USER</p>
-          <p className="text-sm opacity-70">Register new YoRHa unit</p>
-        </button>
-
-        <button className="button p-8 text-left hover:bg-[#454138] hover:text-[#dcd8c0] transition-all">
-          <p className="text-sm tracking-widest mb-2">03</p>
-          <p className="text-xl mb-4">ARCHIVES</p>
-          <p className="text-sm opacity-70">Access data archives</p>
-        </button>
-
-        <button className="button p-8 text-left hover:bg-[#454138] hover:text-[#dcd8c0] transition-all">
-          <p className="text-sm tracking-widest mb-2">04</p>
-          <p className="text-xl mb-4">SYSTEM INFO</p>
-          <p className="text-sm opacity-70">View system status</p>
-        </button>
+      <nav className="grid grid-cols-1 gap-4 max-w-2xl mx-auto mt-12">
+        {!user?.id ? (
+          <>
+            <NavButton
+              number="01"
+              title="AUTHORIZATION"
+              description="Access YoRHa database"
+              to="/login"
+            />
+            <NavButton
+              number="02"
+              title="NEW UNIT"
+              description="Register new YoRHa unit"
+              to="/register"
+            />
+          </>
+        ) :  (
+          <NavButton
+            number="01"
+            title="UNIT INFO"
+            description="View unit system status"
+            to="/unitinfo"
+          />
+        )}
       </nav>
 
       {/* 하단 상태 표시 */}

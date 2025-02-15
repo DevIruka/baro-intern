@@ -6,7 +6,7 @@ import AuthInput from "./AuthInput";
 import AuthButton from "./AuthButton";
 import { useAuthStore } from "../../store/authStore";
 
-const SignupForm = () => {
+const RegiterForm = () => {
   const nav = useNavigate();
   const { setUser } = useAuthStore();
   const [credentials, setCredentials] = useState<SignupCredentials>({
@@ -125,4 +125,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default RegiterForm;
