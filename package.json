@@ -7,14 +7,17 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "types:gen": "supabase gen types typescript --project-id \"uhwwmfgyaeplkiwujksq\" --schema public > src/types/database.types.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-query": "^5.66.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
+    "supabase": "^2.12.1",
     "tailwindcss": "^4.0.6",
     "zustand": "^5.0.3"
   },

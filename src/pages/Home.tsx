@@ -1,14 +1,16 @@
 import { useState } from "react";
 import NierLoadingScreen from "../components/Loading";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 const Home = () => {
   const nav = useNavigate();
+  const { user } = useAuthStore();
   const [isLoading, setIsLoading] = useState(true);
 
   if (isLoading) {
     return <NierLoadingScreen setIsLoading={setIsLoading} />;
   }
-
+  console.log(user);
   return (
     <div className="space-y-8">
       {/* 메인 타이틀 섹션 */}

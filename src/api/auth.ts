@@ -1,33 +1,37 @@
-import { LoginCredentials } from "../types/auth.types";
+import { LoginCredentials, SignupCredentials } from "../types/auth.types";
+import { supabase } from "./supabaseClient";
 
 export const authApi = {
-  login: async (credentials: LoginCredentials) => {
-    const response = await fetch("YOUR_API_URL/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
+  //로그인 로직
+  signInWithPassword: async (credentials: LoginCredentials) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: credentials.email,
+      password: credentials.password,
     });
 
-    if (!response.ok) {
-      throw new Error("로그인 실패");
+    if (error) {
+      throw new Error(error.message);
     }
-
-    return response.json();
+      console.log("data", data);
+    return data;
   },
 
-  getProfile: async (token: string) => {
-    const response = await fetch("YOUR_API_URL/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  //회원가입 로직
+  signup: async (credentials: SignupCredentials) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: credentials.email,
+      password: credentials.password,
+      options: {
+        data: {
+          nickname: credentials.nickname,
+        },
       },
     });
 
-    if (!response.ok) {
-      throw new Error("프로필을 가져오는데 실패했습니다.");
+    if (error) {
+      throw new Error(error.message);
     }
 
-    return response.json();
+    return data;
   },
 };

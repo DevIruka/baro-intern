@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useLogin } from "../../hooks/useAuth";
 import { LoginCredentials } from "../../types/auth.types";
+import AuthInput from "./AuthInput";
+import AuthButton from "./AuthButton";
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState<LoginCredentials>({
@@ -41,39 +43,25 @@ const LoginForm = () => {
           )}
 
           <div className="space-y-8">
-            <div className="relative">
-              <input
-                type="email"
-                name="email"
-                value={credentials.email}
-                onChange={handleChange}
-                placeholder="EMAIL"
-                className="w-full bg-[#1a1a1a] border border-[#c3bdb4] p-4 text-[#c3bdb4] placeholder-[#707070]
-                         focus:outline-none focus:border-[#e2dcd5] transition-colors tracking-wider text-lg"
-              />
-            </div>
+            <AuthInput
+              type="email"
+              placeholder="EMAIL"
+              value={credentials.email}
+              onChange={handleChange}
+              name="email"
+            />
 
-            <div className="relative">
-              <input
-                type="password"
-                name="password"
-                value={credentials.password}
-                onChange={handleChange}
-                placeholder="PASSWORD"
-                className="w-full bg-[#1a1a1a] border border-[#c3bdb4] p-4 text-[#c3bdb4] placeholder-[#707070]
-                         focus:outline-none focus:border-[#e2dcd5] transition-colors tracking-wider text-lg"
-              />
-            </div>
+            <AuthInput
+              type="password"
+              placeholder="PASSWORD"
+              value={credentials.password}
+              onChange={handleChange}
+              name="password"
+            />
 
-            <button
-              type="submit"
-              disabled={isPending}
-              className="w-full p-4 border-2 border-[#c3bdb4] bg-[#1a1a1a] text-[#c3bdb4] 
-                       hover:bg-[#c3bdb4] hover:text-[#1a1a1a] transition-colors tracking-widest
-                       disabled:opacity-50 disabled:cursor-not-allowed text-lg"
-            >
+            <AuthButton type="submit" disabled={isPending}>
               {isPending ? "CONNECTING..." : "AUTHENTICATE"}
-            </button>
+            </AuthButton>
           </div>
 
           <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#c3bdb4] to-transparent" />
