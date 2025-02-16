@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import NierLoadingScreen from "../components/Loading";
 import { useAuthStore } from "../store/authStore";
 import { supabase } from "../api/supabaseClient";
 import NavButton from "../components/Home/NavButton";
+import NierLoadingScreen from "../components/common/Loading";
 
 const Home = () => {
   const { setUser, user } = useAuthStore();
@@ -49,6 +49,10 @@ const Home = () => {
     );
   }
 
+  const throwError = () => {
+    throw new Error("This is a test error");
+  };
+
   return (
     <div className="space-y-8">
       {/* 메인 타이틀 섹션 */}
@@ -87,6 +91,7 @@ const Home = () => {
             to="/unitinfo"
           />
         )}
+        <button onClick={throwError}>THROW ERROR</button>
       </nav>
 
       {/* 하단 상태 표시 */}

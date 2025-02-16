@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { systemMessages } from "../constant/systemMessages";
+import { systemMessages } from "../../constant/systemMessages";
+
 
 // NierLoadingScreen.jsx
 interface NierLoadingScreenProps {
