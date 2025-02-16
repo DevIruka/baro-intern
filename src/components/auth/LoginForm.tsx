@@ -30,7 +30,7 @@ const LoginForm = () => {
       <div className="relative w-full max-w-[800px] mx-4">
         <form
           onSubmit={handleSubmit}
-          className="relative p-8 border-2 border-[#c3bdb4] bg-[#2b2b2b]/80"
+          className="relative p-8 border-2 border-[#c3bdb4] bg-[#4b4a45]"
         >
           <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#c3bdb4] to-transparent" />
 

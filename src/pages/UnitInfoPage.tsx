@@ -42,7 +42,7 @@ const UnitInfoPage = () => {
         <div className="h-[1px] w-32 bg-[#454138] mx-auto"></div>
       </section>
 
-      <div className="border-2 border-[#c3bdb4] bg-[#2b2b2b]/80 p-8 relative">
+      <div className="border-2 border-[#c3bdb4] bg-[#4b4a45] p-8 relative">
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#c3bdb4] to-transparent" />
 
         {/* 프로필 이미지 섹션 */}
