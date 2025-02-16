@@ -83,13 +83,21 @@ const Home = () => {
               to="/register"
             />
           </>
-        ) :  (
-          <NavButton
-            number="01"
-            title="UNIT INFO"
-            description="View unit system status"
-            to="/unitinfo"
-          />
+        ) : (
+          <>
+            <NavButton
+              number="01"
+              title="UNIT INFO"
+              description="View unit system status"
+              to="/unitinfo"
+            />
+            <NavButton
+              number="02"
+              title="ARCHIVE"
+              description="View YoRHa DB archives"
+              to="/archive"
+            />
+          </>
         )}
         <button onClick={throwError}>THROW ERROR</button>
       </nav>

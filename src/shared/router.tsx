@@ -5,6 +5,7 @@ import UnitInfoPage from "../pages/UnitInfoPage";
 import Home from "../pages/Home";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { GuestRoute } from "./GuestRoute";
+import Archive from "../pages/Archive";
 
 const publicRoutes = [{ path: "/", element: <Home /> }];
 
@@ -13,7 +14,10 @@ const guestRoutes = [
   { path: "/register", element: <RegisterPage /> },
 ];
 
-const protectedRoutes = [{ path: "/unitinfo", element: <UnitInfoPage /> }];
+const protectedRoutes = [
+  { path: "/unitinfo", element: <UnitInfoPage /> },
+  { path: "/archive", element: <Archive /> },
+];
 
 const Router = () => {
   return (
